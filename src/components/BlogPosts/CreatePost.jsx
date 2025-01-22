@@ -4,18 +4,19 @@ import 'react-quill/dist/quill.snow.css';
 import { userContext } from '../Contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+// import Loader from '../Loader';
 
 const CreatePost = () => {
   const { supabase, token, user } = useContext(userContext);
   const navigate = useNavigate();
-
+  // const [isLoading, setIsLoading] = useState(false)
   const [postData, setPostData] = useState({
     title: '',
     content: '',
     img_url: ''
   });
 
-  const [file, setFile] = useState(null); // To store the selected file temporarily
+  const [file, setFile] = useState(null); 
 
   // Handle image file selection
   const handleImage = (e) => {
@@ -26,7 +27,7 @@ const CreatePost = () => {
   // Submit the post to the database
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+setIsLoading(true)
     let img_url = postData.img_url;  // Use the existing image URL or upload a new one
 
     if (file) {
@@ -40,7 +41,7 @@ const CreatePost = () => {
         });
 
       if (uploadError) {
-        console.error('Error uploading file:', uploadError.message);
+        console.error('Error uploading file:', uploadError.message)
       } else {
         // Get the public URL of the uploaded image
         const { data: urlData} = await supabase
@@ -70,8 +71,10 @@ const CreatePost = () => {
 
     if (error) {
       console.error('Error inserting data:', error.message);
+      setIsLoading(false)
     } else {
       toast.success('Posted')
+      setIsLoading(false)
       navigate('/')
       // console.log('Data inserted:', data);
     }
@@ -135,6 +138,7 @@ const CreatePost = () => {
           </button>
         </div>
       </form>
+
     </div>
   );
 };

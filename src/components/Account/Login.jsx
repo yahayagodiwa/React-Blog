@@ -2,10 +2,12 @@ import  { useContext, useState } from 'react'
 import { userContext } from '../Contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
+import Loader from '../Loader'
 
 const Login = () => {
   const {supabase} = useContext(userContext)
 const navigate = useNavigate()
+const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -26,32 +28,31 @@ const [errors, setErrors] = useState({})
 
   const handleSubmit =  async (e) => { 
     e.preventDefault()
-
+setIsLoading(true)
     if (!validateForm()) return
-
-
     const { data, error } = await supabase.auth.signInWithPassword({
       email: formData.email,
       password: formData.password,
     })
     
-
   if (error) {
     console.error(error.message);
     toast.error(error.message)
+    setIsLoading(false)
 } else {
   const token = data.session?.access_token
   localStorage.setItem('token', token)
   toast.success('Login successfully')
+  setIsLoading(false)
   navigate('/create')
     // console.log('Login successfully');
 }
-
   
   }
   return (
     <div>
         <div className="min-h-screen flex items-center justify-center bg-gray-100 py-20">
+      {isLoading ? <Loader /> :
       <div className="bg-white p-8 rounded shadow-lg w-full max-w-md">
         <ToastContainer />
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
@@ -80,7 +81,6 @@ const [errors, setErrors] = useState({})
             )}
           </div>
 
-         
           <div className="mb-4">
             <label
               htmlFor="password"
@@ -112,7 +112,9 @@ const [errors, setErrors] = useState({})
           </button>
         </form>
       </div>
+}
     </div>
+
     </div>
   )
 }

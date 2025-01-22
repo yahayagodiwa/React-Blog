@@ -1,6 +1,8 @@
 import  { useContext, useState } from "react";
 import { userContext } from "../Contexts/AuthContext";
 import { toast, ToastContainer } from "react-toastify";
+import Loader from "../Loader";
+import { Navigate } from "react-router-dom";
 // import bcrypt from 'bcryptjs'
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +17,7 @@ const Register = () => {
 
   const {supabase} = useContext(userContext)
   const [errors, setErrors] = useState({});
-
+  const [isLoading, setIsLoading] = useState(false)
   const handleChange = (e) => {
     const {name, value} = e.target
     setFormData( {...formData, [name]:value})
@@ -37,7 +39,7 @@ const Register = () => {
     e.preventDefault();
     if (validateForm()) {
         // const hashedpassword = await bcrypt.hash(formData.password, 10)
-       
+       setIsLoading(true)
       const {data, error} = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -53,10 +55,13 @@ const Register = () => {
         if (error) {
           console.error("Sign-up error:", error.message);
           toast.error(error.message)
+          setIsLoading(false)
           return;
         } else {
           console.log("User created:", data);
           toast.success(data.message)
+          setIsLoading(false)
+          Navigate('/profile')
         }
         
         // Insert profile information into the 'profiles' table
@@ -82,6 +87,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-20">
+      {isLoading ? <Loader />: 
       <div className="bg-white p-8 rounded shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
         <ToastContainer />
@@ -260,6 +266,7 @@ const Register = () => {
           </button>
         </form>
       </div>
+    }
     </div>
   );
 };

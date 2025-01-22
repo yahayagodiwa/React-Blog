@@ -1,13 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import { userContext } from "./components/Contexts/AuthContext";
 import { Link } from "react-router-dom";
+import Loader from "./components/Loader";
 
 const App = () => {
   const img = 'https://img.freepik.com/free-photo/sky-clouds-cinematic-clouds-wallpaper-5_1562-742.jpg?t=st=1737392224~exp=1737395824~hmac=9e963bb34d97873cef211ab9de0c42cc610e298fb28a067817f006ae3cbb6a19&w=740'
   const [blogPost, setBlogPost] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
   const { supabase } = useContext(userContext);
 
   const fetchPosts = async () => {
+    setIsLoading(true)
     try {
       const { data: posts } = await supabase
         .from('posts')
@@ -16,9 +19,11 @@ const App = () => {
       
       if (posts) {
         setBlogPost(posts);
+        setIsLoading(false)
       }
     } catch (error) {
       console.log(error);
+      setIsLoading(false)
     }
   };
 
@@ -30,11 +35,11 @@ const App = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen text-gray-800">
-      {/* Header */}
-
-      {/* Main Content */}
+      
+      
       <main className="container mx-auto px-4 py-8">
-        {/* Blog Posts Grid */}
+{isLoading ? <Loader /> :
+       
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogPost.map((post) => {
             // Calculate preview content for each post
@@ -60,7 +65,9 @@ const App = () => {
             );
           })}
         </div>
+}
       </main>
+
     </div>
   );
 };
