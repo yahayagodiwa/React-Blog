@@ -44,7 +44,7 @@ setIsLoading(true)
   localStorage.setItem('token', token)
   toast.success('Login successfully')
   setIsLoading(false)
-  navigate('/create')
+  navigate('/profile')
     // console.log('Login successfully');
 }
   

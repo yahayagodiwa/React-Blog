@@ -8,7 +8,7 @@ const SinglePost = () => {
     const { supabase } = useContext(userContext); 
   const { id } = useParams();  // id from the route params
   const [post, setPost] = useState(null);  // Initialize state to hold post data
-const [isLoading, setIsLoading] = useState(false)
+// const [isLoading, setIsLoading] = useState(false)
   const fetchPost = async () => {
     let { data: postData, error } = await supabase
       .from('posts')
@@ -32,7 +32,7 @@ const [isLoading, setIsLoading] = useState(false)
   }
 
   return (
-    <div className="h-[100vh] px-40">
+    <div className="h-[100vh] md:px-40 px-[10px]">
       <h1 className="text-[30px] font-semibold py-3">{post.title}</h1>  
       <img src={img} className="h-48 w-full"/>
       <div dangerouslySetInnerHTML={{ __html: post.content }} /> 

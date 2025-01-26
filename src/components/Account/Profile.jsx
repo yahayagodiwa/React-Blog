@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 const Profile = () => {
@@ -20,55 +21,27 @@ const Profile = () => {
       </div>
 
       {/* Profile Info Section */}
-      <div className="profile-info text-center mt-16">
-        <h1 className="text-2xl font-bold">John Doe</h1>
-        <p className="text-gray-600">Member since January 2023</p>
-        <div className="mt-4">
-          <button className="bg-blue-600 text-white py-2 px-4 rounded-lg mx-2">
+      <div className="profile-info text-center mt-20">
+    
+        <div className="mt-8">
+          <button className="bg-gray-600 text-white py-2 px-4 rounded-lg mx-2">
             Message
           </button>
           <button className="bg-gray-200 text-gray-800 py-2 px-4 rounded-lg mx-2">
             Follow
           </button>
-        </div>
-      </div>
-
-      {/* Tabs Section */}
-      <div className="tabs mt-8 border-b">
-        <div className="max-w-4xl mx-auto flex justify-between px-4">
-          <button className="py-2 px-4 text-blue-600 border-b-2 border-blue-600 font-semibold">
-            Posts
+          <Link to="/create">
+          <button className="bg-blue-600 text-gray-800 py-2 px-4 rounded-lg mx-2">
+            Create A Post
           </button>
-          
+          </Link>
         </div>
       </div>
 
-      {/* Posts Section */}
-      <div className="posts mt-8 max-w-4xl mx-auto px-4">
-        {/* Sample Post */}
-        <div className="post bg-white p-4 rounded-lg shadow-sm mb-4">
-          <div className="flex items-center mb-4">
-            <img
-              src="https://via.placeholder.com/40"
-              alt="User"
-              className="w-10 h-10 rounded-full"
-            />
-            <div className="ml-4">
-              <h3 className="text-gray-800 font-bold">John Doe</h3>
-              <p className="text-gray-500 text-sm">2 hours ago</p>
-            </div>
-          </div>
-          <p className="text-gray-700">
-            This is a sample post in the forum. The content of the post will
-            appear here.
-          </p>
-          <div className="flex justify-between items-center mt-4">
-            <button className="text-blue-600 font-medium">Like</button>
-            <button className="text-blue-600 font-medium">Comment</button>
-          </div>
-        </div>
-        {/* End of Sample Post */}
-      </div>
+      
+
+      
+     
     </div>
   );
 };
