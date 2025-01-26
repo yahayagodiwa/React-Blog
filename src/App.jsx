@@ -15,7 +15,7 @@ const App = () => {
       const { data: posts } = await supabase
         .from('posts')
         .select('*')
-        .range(0, 9);  // Fetches the first 10 posts (0 to 9)
+        .range(0, 9);  
       
       if (posts) {
         setBlogPost(posts);
