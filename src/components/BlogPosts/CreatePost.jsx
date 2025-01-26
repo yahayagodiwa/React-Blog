@@ -90,7 +90,7 @@ setIsLoading(true)
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className='py-10 px-20'>
+        <div className='py-10 md:px-20 px-[10px]'>
       <ToastContainer />
           <div className="editor">
             <h1 className='font-bold text-[30px]'>Create A post</h1>
@@ -133,7 +133,7 @@ setIsLoading(true)
         </div>
 
         <div>
-          <button type="submit" className='py-4 mx-20 my-5 px-8 bg-blue-600 text-white'>
+          <button type="submit" className='py-4 md:mx-20 mx-[10px] md:my-5 px-8 bg-blue-600 text-white'>
             Submit
           </button>
         </div>
